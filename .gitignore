@@ -1,0 +1,33 @@
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+event-ticketing
+
+# Test binary
+*.test
+
+# Build output
+/bin/
+/dist/
+
+# SQLite database files
+*.db
+*.db-shm
+*.db-wal
+
+# Environment files
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
