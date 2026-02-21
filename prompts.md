@@ -1,41 +1,23 @@
 # AI Prompts Used
 
-This document lists all prompts used when generating code for this project using AI assistance, as required by the project guidelines for transparency.
+The following prompts were used to get assistance for specific parts of this project.
 
 ---
 
-## Prompt 1 — Project Architecture Design
-
-**Tool:** Antigravity (Google DeepMind AI)
-
-**Prompt:**
-> The user provided the capstone project specification (Capstone Project 5: Event Registration & Ticketing System) from an Instructions.txt file and asked for a complete Go REST API implementation to be generated directly into the project directory, ready for GitHub upload. The instruction asked for:
-> - Complete REST API in Go
-> - Database schema with proper constraints
-> - Concurrent booking test (simulate multiple users booking last spot)
-> - README with concurrency strategy explanation
-> - Document explaining approach to preventing race conditions
-
-**Files generated:**
-- `main.go` — Server entry point and route registration
-- `go.mod` — Module definition with SQLite and bcrypt dependencies
-- `schema.sql` — Database schema reference
-- `db/db.go` — Database initialisation with WAL mode and schema migration
-- `models/user.go` — User struct and bcrypt password operations
-- `models/event.go` — Event CRUD database operations
-- `models/registration.go` — Concurrency-safe atomic booking logic
-- `middleware/auth.go` — HMAC-SHA256 token generation and validation middleware
-- `handlers/auth.go` — Register and Login HTTP handlers
-- `handlers/events.go` — Event CRUD HTTP handlers
-- `handlers/registrations.go` — Registration HTTP handlers
-- `handlers/helpers.go` — Shared JSON response utilities
-- `concurrent_test.go` — 50-goroutine concurrent booking simulation test
-- `README.md` — Project documentation
-- `DESIGN.md` — Race condition prevention design document
-- `.gitignore` — Git ignore file
+**Prompt 1 — Concurrency & Race Condition Prevention**
+> "I am building an event ticketing system in Go where multiple users can register for events. The event has a limited capacity. How do I make sure two users don't both get the last ticket at the same time? I am using SQLite as my database. What is the safest way to handle this concurrency problem?"
 
 ---
 
-## Notes
+**Prompt 2 — Writing the Concurrent Booking Test**
+> "How do I write a Go unit test that simulates multiple goroutines all trying to register for the same event at the same time, to verify that overbooking does not happen? I want to use the standard testing package and httptest."
 
-All code was reviewed and understood before submission. The core concurrency algorithm (BEGIN IMMEDIATE transactions with single-connection constraint) was specifically chosen and understood for its correctness properties. The AI was used as a code generation tool; the design decisions were explained in DESIGN.md.
+---
+
+**Prompt 3 — SQLite Transactions in Go**
+> "What is the difference between BEGIN, BEGIN IMMEDIATE and BEGIN EXCLUSIVE in SQLite? Which one should I use when I need to read and then update a row atomically in a Go application to avoid race conditions?"
+
+---
+
+**Prompt 4 — Token-Based Authentication Without External Libraries**
+> "How do I implement a simple token-based login system in Go using only the standard library? I want to sign tokens using HMAC-SHA256 and validate them in a middleware function."
